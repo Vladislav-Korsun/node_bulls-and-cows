@@ -19,11 +19,28 @@ function getBullsAndCows(userInput, numberToGuess) {
   let bulls = 0;
   let cows = 0;
 
+  const usedUser = [false, false, false, false];
+  const usedTarget = [false, false, false, false];
+
   for (let i = 0; i < 4; i++) {
     if (user[i] === target[i]) {
       bulls++;
-    } else if (target.includes(user[i])) {
-      cows++;
+      usedUser[i] = true;
+      usedTarget[i] = true;
+    }
+  }
+
+  for (let i = 0; i < 4; i++) {
+    if (usedUser[i]) {
+      continue;
+    }
+
+    for (let j = 0; j < 4; j++) {
+      if (!usedTarget[j] && user[i] === target[j]) {
+        cows++;
+        usedTarget[j] = true;
+        break;
+      }
     }
   }
 
